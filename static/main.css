@@ -1,0 +1,177 @@
+header {
+	font: small 'Lucida Grande', Verdana, Arial, sans-serif;
+	width: 880px;
+    padding: 0;
+    overflow: hidden;
+	margin: 10px;
+	color: #333333;
+}
+
+body {
+	font: small 'Lucida Grande', Verdana, Arial, sans-serif;
+	width: 900px;
+	color: #333333;
+	position: absolute;
+	left: 50%;
+	margin-left: -450px;
+}
+
+.nav {
+    font: small 'Lucida Grande', Verdana, Arial, sans-serif;
+	width: 890px;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+	margin: 10px;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+
+}
+
+.right_link {
+	float:right;
+}
+.bold{
+	font-weight: bold;
+}
+.left_link {
+	float:left;
+}
+
+.nav_link {
+	display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+	margin-right: 25px;
+	margin-left: 25px;
+}
+
+a.nav_link:hover {
+    background-color: #111;
+}
+
+h2 {
+    font-size: 120%;
+    font-weight: bold;
+}
+h1 {
+    font-size: 16pt;
+    font-weight: bold;
+}
+.container {
+	display: -webkit-flex;
+    display: flex;
+    background-color: #389aad;
+	flex-direction: row;
+	align-items: stretch;
+	justify-items: flex-start;
+	flex-wrap: wrap;
+	width: 870px;
+    margin: 10px;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+
+.column {
+    background-color: #f2f2f2;
+    margin: 10px;
+	width: 250px;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+    box-shadow: 2px 2px 2px #777777;
+	position: relative;
+	min-height: 250px;
+}
+
+.report {
+    background-color: white;
+    margin: 10px;
+	width: 590px;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	box-shadow: 2px 2px 2px #777777;
+	height: 100%;
+	color: black;
+}
+
+div {
+    display: block;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-top: 0.35em;
+    padding-bottom: 0.625em;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    border: 2px;
+}
+
+.button {
+	list-style-type: none;
+	width: 90%;
+	padding: 2.5px;
+}
+
+#run_oncofuse{
+	position: absolute;
+	bottom: 10px;
+	left: 80px;
+}
+
+#loader_gif {
+	width: 220px;
+	margin: 15px;
+	}
+
+#result_column {
+	width: 200px;
+	height: 100%;
+}
+
+.submit {
+	margin: 5px;
+}
+
+#submit_box {
+	margin: 5px;
+}
+
+.centered {
+	text-align: center;
+}
+
+.button:hover {
+	background: #FECA40;
+}
+
+.help {
+	font: small 'Lucida Grande', Verdana, Arial, sans-serif;
+	padding: 0;
+}
+
+#help {
+	margin-left: 150px;
+	width: 600px;
+}
+
+#home_header {
+	margin-left: 25px;
+	width: 850px;
+}
+
+.download_link {
+	color: #333;
+	padding: 10px;
+	text-decoration: none;
+	display: inline-block;
+	width: 250px;
+}
+
+.download_link:hover{
+	background-color: #f44336;
+}
