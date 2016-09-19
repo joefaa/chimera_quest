@@ -31,7 +31,7 @@ def run_oncofuse( user_input ):
 
 
 	# Store the command to run oncofuse as a string
-	command = "java -Xmx1G -jar ../oncofuse/Oncofuse.jar {} {} {} {}".format(input_file_path, input_type, tissue_type, output_file_path )
+	command = "java -Xmx1G -jar ./oncofuse/Oncofuse.jar {} {} {} {}".format(input_file_path, input_type, tissue_type, output_file_path )
 	command = command.split()
 
 	# Run oncofuse and open/read the results
@@ -43,8 +43,8 @@ def run_oncofuse( user_input ):
 	# for line in open(output_file_path).readlines():
 	# 	results = results + line
 	# delete any files created
-	# deleter = "rm {} {}".format(input_file_path, output_file_path)
-	# deleter = deleter.split()
+	deleter = "rm {} {}".format(input_file_path, output_file_path)
+	deleter = deleter.split()
 	# subprocess.call(deleter)
 
 	return(results)
