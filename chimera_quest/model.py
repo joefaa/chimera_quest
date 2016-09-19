@@ -8,7 +8,7 @@ This script consists of three functions, run_oncofuse() will take the user input
 import json
 import os
 
-import mysqlc.connector
+import mysql.connector
 
 import subprocess
 from random import choice
@@ -44,7 +44,7 @@ def run_oncofuse( user_input ):
 	# delete any files created
 	deleter = "rm {} {}".format(input_file_path, output_file_path)
 	deleter = deleter.split()
-	# subprocess.call(deleter)
+	subprocess.call(deleter)
 
 	return(results)
 
@@ -53,7 +53,7 @@ def run_oncofuse( user_input ):
 def literature_search( id ):
 
 	# connect to the biosql database
-	conn = mysqlc.connector.connect( user=os.environ['user'], password=os.environ['password'],
+	conn = mysql.connector.connect( user=os.environ['user'], password=os.environ['password'],
 										host=os.environ['host'], db=os.environ['db'] )
 	curs = conn.cursor()
 
