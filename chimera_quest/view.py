@@ -1,9 +1,9 @@
 import jinja2
 from chimera_quest.model import chimera_quest
 import cgi
-import os
-from tempfile import TemporaryFile
 import sys
+from tempfile import TemporaryFile
+import os
 def application( environ, start_response ):
 
     templateLoader = jinja2.FileSystemLoader( searchpath="./templates" )
