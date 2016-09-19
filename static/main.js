@@ -2,44 +2,40 @@
 // and check the database.  A JSON object is returned will all the data
 function oncofuse_results(  ) {
 	// hide parts that aren't populated and set up the loader gif
-    $('#fusion_ids').empty();
+  $('#fusion_ids').empty();
 	$('#result_count').empty();
 	$("#run_oncofuse").prop("disabled",true);
 	$('#submit_column').hide();
-    $('#loader').show();
+  $('#loader').show();
 	$('#results').hide();
 	$('#oncofuse_report').hide();
 	$('#literature_report').hide();
 	$('#empty_lit_report').hide();
 	$('#empty_onco_report').hide();
+  var user_input = $('#user_input').serialize();
 	var fd = new FormData();
-    var user_input = $('#user_input').serialize();
-	var file_data = $('#input_file')[0].files;
-	$.each(file_data, function (i, file){
-		fd.append("file", file);
-	});
+  var file_data = $('#input_file')[0].files[0];
+  fd.append('input_file', file_data);
 
 	$.ajax({
-		url: "./chimera_quest/views.py?" + user_input,
+		url: "../chimera_quest/view.py?" + user_input,
 		data: fd,
 		type: "POST",
 		dataType: "json",
 		processData: false,
 		contentType: false,
 		success: function(results, textStatus, jqXHR) {
-				console.log("success")
-				console.log(results)
+      console.log("success")
 			if(results.length < 1) {
+        console.log("no results found")
 				$('#result_count').text( "0" );
-				console.log("results.length < 1")
 				$('#oncofuse_report').hide();
 				$('#literature_report').hide();
 				$('#empty_onco_report').show();
 			} else {
-				console.log("results.length > 0")
+      console.log("results found")
 				$('#result_count').text( results.length );
 			    $.each( results, function( i, value ) {
-					console.log("making buttons")
 					object_string = JSON.stringify(value);
 					var result_button = "<li class='button'><input name='fusion' type='radio' value='" + object_string + "'>" + value.id + "</li>"
 					$( "#fusion_ids" ).append(result_button);
@@ -52,7 +48,6 @@ function oncofuse_results(  ) {
 		},
 		error: function(jqXHR, textStatus, errorThrown){
 			console.log("fail")
-			console.log(jqXHR)
 			alert("Failed to perform fusion gene search! textStatus: (" + textStatus +
 				  ") and errorThrown: (" + errorThrown + ")");
 			$('#loader').hide();
@@ -109,44 +104,44 @@ function make_literature_report(  ){
 		$('#literature_report').hide();
 		$('#empty_lit_report').show();
 	} else {
-	$('#lit_report_header').text( fusion.id );
-	$('#total_matches').text( fusion.total_matches );
-	$('#pubmed_matches').text( fusion.pubmed_matches );
-	$('#pubmed_diseases').text( fusion.pubmed_diseases );
-	$('#pubmed_references').text( fusion.pubmed_references );
-	$('#omim_matches').text( fusion.omim_matches );
-	$('#omim_diseases').text( fusion.omim_diseases );
-	$('#omim_references').text( fusion.omim_references );
-	$('#omim_annotation').text( fusion.omim_annotation );
-	$('#sanger_matches').text( fusion.sanger_matches );
-	$('#sangercgp_diseases').text( fusion.sangercgp_diseases );
-	$('#sangercgp_head_gene_locus').text( fusion.sangercgp_head_gene_locus );
-	$('#sangercgp_head_gene_function').text( fusion.sangercgp_head_gene_function );
-	$('#sangercgp_tail_gene_locus').text( fusion.sangercgp_tail_gene_locus );
-	$('#sangercgp_tail_gene_function').text( fusion.sangercgp_tail_gene_function );
-	$('#mitelman_matches').text( fusion.mitelman_matches );
-	$('#mitelman_diseases').text( fusion.mitelman_diseases );
-	$('#mitelman_abnormality').text( fusion.mitelman_abnormality );
-	$('#mitelman_fusion_locus').text( fusion.mitelman_fusion_locus );
-	$('#mitelman_head_gene_locus').text( fusion.mitelman_head_gene_locus );
-	$('#mitelman_tail_gene_locus').text( fusion.mitelman_tail_gene_locus );
-	$('#oncofuse_report').hide();
-	$('#literature_report').show();
-	$('#empty_lit_report').hide();
-	$('#empty_onco_report').hide();
+  	$('#lit_report_header').text( fusion.id );
+  	$('#total_matches').text( fusion.total_matches );
+  	$('#pubmed_matches').text( fusion.pubmed_matches );
+  	$('#pubmed_diseases').text( fusion.pubmed_diseases );
+  	$('#pubmed_references').text( fusion.pubmed_references );
+  	$('#omim_matches').text( fusion.omim_matches );
+  	$('#omim_diseases').text( fusion.omim_diseases );
+  	$('#omim_references').text( fusion.omim_references );
+  	$('#omim_annotation').text( fusion.omim_annotation );
+  	$('#sanger_matches').text( fusion.sanger_matches );
+  	$('#sangercgp_diseases').text( fusion.sangercgp_diseases );
+  	$('#sangercgp_head_gene_locus').text( fusion.sangercgp_head_gene_locus );
+  	$('#sangercgp_head_gene_function').text( fusion.sangercgp_head_gene_function );
+  	$('#sangercgp_tail_gene_locus').text( fusion.sangercgp_tail_gene_locus );
+  	$('#sangercgp_tail_gene_function').text( fusion.sangercgp_tail_gene_function );
+  	$('#mitelman_matches').text( fusion.mitelman_matches );
+  	$('#mitelman_diseases').text( fusion.mitelman_diseases );
+  	$('#mitelman_abnormality').text( fusion.mitelman_abnormality );
+  	$('#mitelman_fusion_locus').text( fusion.mitelman_fusion_locus );
+  	$('#mitelman_head_gene_locus').text( fusion.mitelman_head_gene_locus );
+  	$('#mitelman_tail_gene_locus').text( fusion.mitelman_tail_gene_locus );
+  	$('#oncofuse_report').hide();
+  	$('#literature_report').show();
+  	$('#empty_lit_report').hide();
+  	$('#empty_onco_report').hide();
 	}
 };
 
 // run our javascript once the page is ready
 $(document).ready( function() {
-    $('#help').hide();
-    $('#loader').hide();
-    $('#results').hide();
+  $('#help').hide();
+  $('#loader').hide();
+  $('#results').hide();
 	$('#help').hide();
-    $('#downloads').hide();
-    $('#user_input').submit( function() {
-        oncofuse_results();
-        return false;
+  $('#downloads').hide();
+  $('#user_input').submit( function() {
+      oncofuse_results();
+      return false;
 	});
 	$('#onco_report').click( function() {
 		make_oncofuse_report();

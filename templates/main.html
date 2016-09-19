@@ -29,204 +29,203 @@
 		<div class="column">
 			<h3>Select an input file-type</h3>
 
-			<form  action="" id="user_input" name="user_input" method="post">
+			<form id="user_input" name="user_input" method="post" enctype="multipart/form-data">
 
-	        <li class="button"><input name="input_type" type="radio" value="coord" checked>Tab-delimited coordinate file</input></li>
-	        <li class="button"><input name="input_type" type="radio" value="fcatcher">Fusion Catcher</input></li>
-	        <li class="button"><input name="input_type" type="radio" value="tophat">Tophat</input></li>
-	        <li class="button"><input name="input_type" type="radio" value="tophat-post">Tophat-post</input></li>
-	        <li class="button"><input name="input_type" type="radio" value="rnastar">RNA-Star</input></li>
-	        <li class="button"><input name="input_type" type="radio" value="fcatcher">Fusion Catcher</input></li>
-	        <li class="button"><input name="input_type" type="radio" value="starfusion">Star Fusion</input></li>
+        <li class="button"><input name="input_type" type="radio" value="coord" checked>Tab-delimited coordinate file</input></li>
+        <li class="button"><input name="input_type" type="radio" value="fcatcher">Fusion Catcher</input></li>
+        <li class="button"><input name="input_type" type="radio" value="tophat">Tophat</input></li>
+        <li class="button"><input name="input_type" type="radio" value="tophat-post">Tophat-post</input></li>
+        <li class="button"><input name="input_type" type="radio" value="rnastar">RNA-Star</input></li>
+        <li class="button"><input name="input_type" type="radio" value="fcatcher">Fusion Catcher</input></li>
+        <li class="button"><input name="input_type" type="radio" value="starfusion">Star Fusion</input></li>
+			</div>
+			<div class="column">
+				<h3>Select a tissue type</h3>
+        <li class="button"><input name="tissue_type" type="radio" value="EPI">Epithelial</input></li>
+        <li class="button"><input name="tissue_type" type="radio" value="HEM">Hematopoietic</input></li>
+        <li class="button"><input name="tissue_type" type="radio" value="MES">Mesenchymal</input></li>
+        <li class="button"><input name="tissue_type" type="radio" value="AVG" checked>Other/Unknown</input></li>
+			</div>
+			<div class="column" id="loader"><img id="loader_gif" src="./loading.gif" alt="Loader gif">
+			</div>
+			<div class="column" id="submit_column">
+				<h3>Select a file to upload</h3>
+				<input type="file" id="input_file" name="input_file">
+        <input type="submit" class="submit" id="run_oncofuse" value="Run Oncofuse">
+				</form>
+			</div>
 		</div>
-		<div class="column">
-			<h3>Select a tissue type</h3>
-	        <li class="button"><input name="tissue_type" type="radio" value="EPI">Epithelial</input></li>
-	        <li class="button"><input name="tissue_type" type="radio" value="HEM">Hematopoietic</input></li>
-	        <li class="button"><input name="tissue_type" type="radio" value="MES">Mesenchymal</input></li>
-	        <li class="button"><input name="tissue_type" type="radio" value="AVG" checked>Other/Unknown</input></li>
-		</div>
-		<div class="column" id="loader"><img id="loader_gif" src="./img/loading.gif" alt="Loader gif">
-		</div>
-		<div class="column" id="submit_column">
-			<h3>Select a file to upload</h3>
-		<input type="file" id="input_file" name="input_file">
-	        <input type="submit" class="submit" id="run_oncofuse" value="Run Oncofuse">
-			</form>
-		</div>
-		</div>
-	</section>
+</section>
 
 	<section id="results" class="home">
 		<div class="container">
 		<div class="column" id="result_column">
-			<h3>
-				<span id="result_count"></span> match(es) found.
-			</h3>
-
-			<form name="fusion" id="fusion" action="">
-				<span id=fusion_ids></span>
-			<div id="submit_box">
-	        	<input type="submit" class="submit" id="onco_report" value="Show Oncofuse report">
-				<input type="submit" class="submit" id="lit_report" value="Show literature report">
-				<span id="no_lit matches"></span>
-			</div>
-			</form>
+		<h3>
+			<span id="result_count"></span> match(es) found.
+		</h3>
+		<form name="fusion" id="fusion" action="">
+			<span id=fusion_ids></span>
+		<div id="submit_box">
+	    <input type="submit" class="submit" id="onco_report" value="Show Oncofuse report">
+			<input type="submit" class="submit" id="lit_report" value="Show literature report">
+			<span id="no_lit matches"></span>
 		</div>
-		<div id="oncofuse_report" class="report">
-			<h1 class="centered">
-			Oncofuse results for <span id="lit_report_header"></span>
-			</h1>
-			<p>Driver probability: <span id="driver_probability"></span></p>
-			<p>Fusion coordinates: <span id="fusion_coordinates"></span></p>
-			<p>Passenger probability: <span id="passenger_probability"></span></p>
-			<p>Expression gain: : <span id="expression_gain"></span></p>
-			<p>Spanning reads: <span id="spanning_reads"></span></p>
-			<p>Encompassing reads: <span id="encompassing_reads"></span></p>
-			<p>Frame difference: <span id="frame_difference"></span></p>
-
-			<h4>Head gene: <span id="five_partner"></span></h4>
-			<p id="five_breakpoint_summary"></p>
-			<p>Length of full protein: <span id="five_gene_length"></span></p>
-			<p>Domains retained: <span id="five_domains_retained"></span></p>
-			<p>Pathways retained: <span id="five_pathways_retained"></span></p>
-			<p>Protein interaction interfaces: <span id="five_interaction_interfaces"></span></p>
-			<p>Domains broken: <span id="five_domains_broken"></span></p>
-
-			<h4>Tail gene: <span id="three_partner"></span></h4>
-			<p id="three_breakpoint_summary">None</p>
-			<p>Length of full protein: <span id="three_gene_length"></span></p>
-			<p>Domains retained: <span id="three_domains_retained"></span></p>
-			<p>Pathways retained: <span id="three_pathways_retained"></span></p>
-			<p>Protein interaction interfaces: <span id="three_interaction_interfaces"></span></p>
-			<p>Domains broken: <span id="three_domains_broken"></span></p>
-		</div>
-
-		<div id="literature_report" class="report">
-		 	<h1 class="centered">
-		 	Literature database report for <span id="lit_report_header"></span>
-		 	</h1>
-		 	<p>A total of <span id="total_matches"></span> matches were found in all four databases</p>
-		 	<h4>PubMed Report</h4>
-		 	<p>Total matches in the PubMed database: <span id="pubmed_matches"></span></p>
-			<p>Disease(s) associated with this fusion transcript: <span id="pubmed_diseases"></span></p>
-			<p>PMID(s) associated with this fusion transcript: <span id="pubmed_references"></span></p>
-
-			<h4>OMIM Report</h4>
-			<p>Total matches in the OMIM database: <span id="omim_matches"></span></p>
-			<p>OMIM title(s): <span id="omim_annotation"></span></p>
-			<p>Disease(s) associated with this fusion transcript: <span id="omim_diseases"></span></p>
-			<p>Reference(s) associated with this fusion transcript: <span id="omim_references"></span></p>
-
-			<h4>Sanger Cancer Genome Project Report</h4>
-			<p>Total matches in the Sanger CGP database: <span id="sanger_matches"></span></p>
-			<p>Head gene locus: <span id="sangercgp_head_gene_locus"></span></p>
-			<p>Head gene function: <span id="sangercgp_head_gene_function"></span></p>
-			<p>Tail gene locus: <span id="sangercgp_tail_gene_locus"></span></p>
-			<p>Tail gene function: <span id="sangercgp_tail_gene_function"></span></p>
-			<p>Diseases associated with this fusion transcript: <span id="sangercgp_diseases"></span></p>
-
-			<h4>Mitelman Database of Chromosome Abberations and Gene Fusions in Cancer Report</h4>
-			<p>Total matches in the Mitelman database: <span id="mitelman_matches"></span></p>
-			<p>Head gene locus: <span id="mitelman_head_gene_locus"></span></p>
-			<p>Tail gene locus: <span id="mitelman_tail_gene_locus"></span></p>
-			<p>Fusion locus: <span id="mitelman_fusion_locus"></span></p>
-			<p>Cytogenetic abnormality: <span id="mitelman_abnormality"></span></p>
-			<p>Diseases associated with this fusion transcript: <span id="mitelman_diseases"></span></p>
-		</div>
-		<div id="empty_lit_report" class="report">
-			<h1 class="centered">
-			No matches for <span id="empty_lit_header"></span> in the literature database.  You may have a discovery on your hands!
-			</h1>
-		</div>
-		<div id="empty_onco_report" class="report">
-			<h1 class="centered">
-			Oncofuse did not identify any potentially oncogenic transcripts.
-			</h1>
-		</div>
-		</div>
-	</section>
-	<div class="help_container">
-	<section id="help" class="help">
-
-		<h1 class="centered">Chimera Quest help</h1>
-
-		<p>Chimera Quest is powered by Oncofuse, BioPython, MySQL and BioSQL. The literature database was populated with information downloaded from the ChimerDB database. The ChimerDB database is itself a compilation of literature references from four literature databases: PubMed, OMIM, Sanger Cancer Genome Project and the Mitelman database.</p>
-
-		<h2 class="centered">Running Chimera Quest</h2>
-
-		<p>Running Chimera Quest is easy, and fun! If you already have the file you need to input, you're most of the way there.  For more information about the acceptable input file types, and tissue types see the Oncofuse help section below.</p>
-
-		<p>Once you have your file ready, select the file-type from the first radio selector, and the tissue-type from the second radio selector.  Then, upload your file and hit Run Oncofuse.  A loader icon will appear while the analysis is being performed, and the results window will appear after the analysis is finished.</p>
-
-		<p>A report for each oncogenic transcript will be available by clicking the symbol for that fused gene and clicking either Show Oncofuse report, to see the oncofuse report, or Show literature report, to see a report generated from the results of the literature database search.</p>
-
-		<h2 class="centered">ChimerDB info</h2>
-
-		<p>ChimerDB is made available by the Ewha Woman's University, the website is linked here: <a href="http://biome.ewha.ac.kr:8080/FusionGene/" target="_blank">http://biome.ewha.ac.kr:8080/FusionGene/</a>.  The ChimerDB intergrated knowledgebase is available for download at <a href="http://biome.ewha.ac.kr:8080/FusionGene/Download.jsp" target="_blank">http://biome.ewha.ac.kr:8080/FusionGene/Download.jsp</a>.  The section below about the input and output of oncofuse is copied from the Oncofuse read me.</p>
-
-		<h2 class="centered">Oncofuse help</h2>
-
-		<p>Oncofuse is made available by the Universidad de Navarra, the website is linked here: <a href="http://www.unav.es/genetica/oncofuse.html" target="_blank">http://www.unav.es/genetica/oncofuse.html</a>.  Oncofuse is available for download from github at <a href="https://github.com/mikessh/oncofuse/releases/tag/1.1.1" target="_blank">https://github.com/mikessh/oncofuse/releases/tag/1.1.1</a>.  The section below about the input and output of oncofuse is copied from the Oncofuse read me.</p>
-		<p>INPUT</p>
-		<p>This tool is designed to predict the oncogenic potential of fusion genes found by Next-Generation Sequencing in cancer cells. It also provides information on hallmarks of driver gene fusions, such as expression gain of resulting fusion gene, retained protein interaction interfaces and resulting protein domain functional profile. </p>
-		<p>Supported tissue types (tissue of origin for gene fusion): EPI (epithelial), HEM (hematopoietic), MES (mesenchymal), AVG (averaged, when tissue of origin is unknown) </p>
-		<p>Supported input types: </p>
-		<p>input_type = "coord" (Default format accepted by Oncofuse) </p>
-		<p>Tab-delimited file with lines containing 5' and 3' breakpoint positions (first nucleotide lost upon fusion) and tissue of origin: </p>
-		<p>5' chrom \t 5' coord \t 3' chrom \t 3' coord \t tissue_type </p>
-		<p>For this format tissue of origin is set individually for each entry in input file and tissue_type argument should be set as "-" </p>
-		<p>input_type = "tophat" </p>
-		<p>Default output file of Tophat-fusion and Tophat2 (usually fusions.out file in results folder). Tophat-fusion-post is also supported with extended input type argument "tophat-post". </p>
-		<p>input_type = "fcatcher" </p>
-		<p>Default output file of FusionCatcher software. Tissue type has to be set using tissue_type argument. </p>
-		<p>input_type = "rnastar" </p>
-		<p>Default output file of RNASTAR software. Data is pre-filtered based on number of spanning N>=1 and total number of supporting reads M>=2 reads. These parameters could be changed with extended input type argument "rnastar-N-M". Tissue type has to be set using tissue_type argument. </p>
-		<p>OUTPUT </p>
-		<p>A tab-delimited table with the following columns </p>
-		<p>SAMPLE_ID	The ID of sample for tophat-post, input file name otherwise </p>
-		<p>FUSION_ID	The original line number in input file </p>
-		<p>TISSUE	As specified by library argument or in 'coord' input file </p>
-		<p>GENOMIC	Chromosomal coordinates for both breakpoints (as in input file) </p>
-		<p>SPANNING_READS	Number of reads that cover fusion junction </p>
-		<p>ENCOMPASSING_READS	Number of reads that map discordantly with one mate mapping to 5'FPG (fusion partner gene) and other mapping to 3'FPG </p>
-
-		<p>5_FPG_GENE_NAME	The HGNC symbol of 5' fusion partner gene </p>
-		<p>5_IN_CDS?	Indicates whether breakpoint is within the CDS of this gene </p>
-		<p>5_SEGMENT_TYPE	Indicates whether breakpoint is located within either exon or intron </p>
-		<p>5_SEGMENT_ID	Indicates number of exon or intron where breakpoint is located </p>
-		<p>5_COORD_IN_SEGMENT	Indicates coordinates for breakpoint within that exon/intron </p>
-		<p>5_FULL_AA	Length of translated 5' FPG in full amino acids </p>
-		<p>5_FRAME	Frame of translated 5' FPG </p>
-		<p>(Same as 7 lines above for the 3' fusion partner gene) </p>
-		<p>FPG_FRAME_DIFFERENCE	The resulting frame of fusion gene, if equals to 0 then the fusion is in-frame </p>
-		<p>P_VAL_CORR	The Bayesian probability of fusion being a passenger (class 0), given as Bonferroni-corrected P-value </p>
-		<p>DRIVER_PROB	The Bayesian probability of fusion being a driver (class 1) </p>
-		<p>EXPRESSION_GAIN	Expression gain of fusion calculated as [(expression of 5' gene)/(expression of 3' gene)]-1 </p>
-		<p>5_DOMAINS_RETAINED	List of protein domains retained in 5' fusion partner gene </p>
-		<p>3_DOMAINS_RETAINED	List of protein domains retained in 3' fusion partner gene </p>
-		<p>5_DOMAINS_BROKEN	List of protein domains that overlap breakpoint in 5' fusion partner gene </p>
-		<p>3_DOMAINS_BROKEN	List of protein domains that overlap breakpoint in 3' fusion partner gene </p>
-		<p>5_PII_RETAINED	List of protein interaction interfaces retained in 5' fusion partner gene </p>
-		<p>3_PII_RETAINED	List of protein interaction interfaces retained in 3' fusion partner gene </p>
-		<p>CTF, G, H, K, P and TF	Corresponding functional family association scores (log-transformed, scaled to the largest score obtained from classifier training set). </p>
-	</section>
-	<section id="downloads" class="help">
-		<h1 class="centered">Example Chimera Quest input files:</h1>
-		<ul>
-		<li><a href="./oncofuse/example/example_coord.txt" class="download_link" download>Example tab-delimited coordinate file</a></li>
-		<li><a href="./oncofuse/example/example_fcatcher.txt" class="download_link" download>Example Fusion Catcher file</a></li>
-		<li><a href="./oncofuse/example/example_rnastar.txt" class="download_link" download>Example RNA Star file</a></li>
-		<li><a href="./oncofuse/example/example_starfusion.txt" class="download_link" download>Example Star Fusion file</a></li>
-		<li><a href="./oncofuse/example/example_tophat_post.txt" class="download_link" download>Example Tophat-post file</a></li>
-		<li><a href="./oncofuse/example/example_tophat.txt" class="download_link" download>Example Tophat file</a></li>
-		</ul>
-	</section>
+		</form>
 	</div>
-	<nav class="nav">
-		<form class="left_link"><a href="" class="nav_link" id="home_button" type="submit" >Home</a></form>
-		<form class="right_link"><a href="" class="nav_link" id="sample_files" type="submit" >Download sample input files</a></form>
-		<form class="right_link"><a href="" class="nav_link" id="help_button" type="submit" >Help</a></form>
+	<div id="oncofuse_report" class="report">
+		<h1 class="centered">
+		Oncofuse results for <span id="lit_report_header"></span>
+		</h1>
+		<p>Driver probability: <span id="driver_probability"></span></p>
+		<p>Fusion coordinates: <span id="fusion_coordinates"></span></p>
+		<p>Passenger probability: <span id="passenger_probability"></span></p>
+		<p>Expression gain: : <span id="expression_gain"></span></p>
+		<p>Spanning reads: <span id="spanning_reads"></span></p>
+		<p>Encompassing reads: <span id="encompassing_reads"></span></p>
+		<p>Frame difference: <span id="frame_difference"></span></p>
+
+		<h4>Head gene: <span id="five_partner"></span></h4>
+		<p id="five_breakpoint_summary"></p>
+		<p>Length of full protein: <span id="five_gene_length"></span></p>
+		<p>Domains retained: <span id="five_domains_retained"></span></p>
+		<p>Pathways retained: <span id="five_pathways_retained"></span></p>
+		<p>Protein interaction interfaces: <span id="five_interaction_interfaces"></span></p>
+		<p>Domains broken: <span id="five_domains_broken"></span></p>
+
+		<h4>Tail gene: <span id="three_partner"></span></h4>
+		<p id="three_breakpoint_summary">None</p>
+		<p>Length of full protein: <span id="three_gene_length"></span></p>
+		<p>Domains retained: <span id="three_domains_retained"></span></p>
+		<p>Pathways retained: <span id="three_pathways_retained"></span></p>
+		<p>Protein interaction interfaces: <span id="three_interaction_interfaces"></span></p>
+		<p>Domains broken: <span id="three_domains_broken"></span></p>
+	</div>
+
+	<div id="literature_report" class="report">
+	 	<h1 class="centered">
+	 	Literature database report for <span id="lit_report_header"></span>
+	 	</h1>
+	 	<p>A total of <span id="total_matches"></span> matches were found in all four databases</p>
+	 	<h4>PubMed Report</h4>
+	 	<p>Total matches in the PubMed database: <span id="pubmed_matches"></span></p>
+		<p>Disease(s) associated with this fusion transcript: <span id="pubmed_diseases"></span></p>
+		<p>PMID(s) associated with this fusion transcript: <span id="pubmed_references"></span></p>
+
+		<h4>OMIM Report</h4>
+		<p>Total matches in the OMIM database: <span id="omim_matches"></span></p>
+		<p>OMIM title(s): <span id="omim_annotation"></span></p>
+		<p>Disease(s) associated with this fusion transcript: <span id="omim_diseases"></span></p>
+		<p>Reference(s) associated with this fusion transcript: <span id="omim_references"></span></p>
+
+		<h4>Sanger Cancer Genome Project Report</h4>
+		<p>Total matches in the Sanger CGP database: <span id="sanger_matches"></span></p>
+		<p>Head gene locus: <span id="sangercgp_head_gene_locus"></span></p>
+		<p>Head gene function: <span id="sangercgp_head_gene_function"></span></p>
+		<p>Tail gene locus: <span id="sangercgp_tail_gene_locus"></span></p>
+		<p>Tail gene function: <span id="sangercgp_tail_gene_function"></span></p>
+		<p>Diseases associated with this fusion transcript: <span id="sangercgp_diseases"></span></p>
+
+		<h4>Mitelman Database of Chromosome Abberations and Gene Fusions in Cancer Report</h4>
+		<p>Total matches in the Mitelman database: <span id="mitelman_matches"></span></p>
+		<p>Head gene locus: <span id="mitelman_head_gene_locus"></span></p>
+		<p>Tail gene locus: <span id="mitelman_tail_gene_locus"></span></p>
+		<p>Fusion locus: <span id="mitelman_fusion_locus"></span></p>
+		<p>Cytogenetic abnormality: <span id="mitelman_abnormality"></span></p>
+		<p>Diseases associated with this fusion transcript: <span id="mitelman_diseases"></span></p>
+	</div>
+	<div id="empty_lit_report" class="report">
+		<h1 class="centered">
+		No matches for <span id="empty_lit_header"></span> in the literature database.  You may have a discovery on your hands!
+		</h1>
+	</div>
+	<div id="empty_onco_report" class="report">
+		<h1 class="centered">
+		Oncofuse did not identify any potentially oncogenic transcripts.
+		</h1>
+	</div>
+	</div>
+</section>
+<div class="help_container">
+<section id="help" class="help">
+
+	<h1 class="centered">Chimera Quest help</h1>
+
+	<p>Chimera Quest is powered by Oncofuse, BioPython, MySQL and BioSQL. The literature database was populated with information downloaded from the ChimerDB database. The ChimerDB database is itself a compilation of literature references from four literature databases: PubMed, OMIM, Sanger Cancer Genome Project and the Mitelman database.</p>
+
+	<h2 class="centered">Running Chimera Quest</h2>
+
+	<p>Running Chimera Quest is easy, and fun! If you already have the file you need to input, you're most of the way there.  For more information about the acceptable input file types, and tissue types see the Oncofuse help section below.</p>
+
+	<p>Once you have your file ready, select the file-type from the first radio selector, and the tissue-type from the second radio selector.  Then, upload your file and hit Run Oncofuse.  A loader icon will appear while the analysis is being performed, and the results window will appear after the analysis is finished.</p>
+
+	<p>A report for each oncogenic transcript will be available by clicking the symbol for that fused gene and clicking either Show Oncofuse report, to see the oncofuse report, or Show literature report, to see a report generated from the results of the literature database search.</p>
+
+	<h2 class="centered">ChimerDB info</h2>
+
+	<p>ChimerDB is made available by the Ewha Woman's University, the website is linked here: <a href="http://biome.ewha.ac.kr:8080/FusionGene/" target="_blank">http://biome.ewha.ac.kr:8080/FusionGene/</a>.  The ChimerDB intergrated knowledgebase is available for download at <a href="http://biome.ewha.ac.kr:8080/FusionGene/Download.jsp" target="_blank">http://biome.ewha.ac.kr:8080/FusionGene/Download.jsp</a>.  The section below about the input and output of oncofuse is copied from the Oncofuse read me.</p>
+
+	<h2 class="centered">Oncofuse help</h2>
+
+	<p>Oncofuse is made available by the Universidad de Navarra, the website is linked here: <a href="http://www.unav.es/genetica/oncofuse.html" target="_blank">http://www.unav.es/genetica/oncofuse.html</a>.  Oncofuse is available for download from github at <a href="https://github.com/mikessh/oncofuse/releases/tag/1.1.1" target="_blank">https://github.com/mikessh/oncofuse/releases/tag/1.1.1</a>.  The section below about the input and output of oncofuse is copied from the Oncofuse read me.</p>
+	<p>INPUT</p>
+	<p>This tool is designed to predict the oncogenic potential of fusion genes found by Next-Generation Sequencing in cancer cells. It also provides information on hallmarks of driver gene fusions, such as expression gain of resulting fusion gene, retained protein interaction interfaces and resulting protein domain functional profile. </p>
+	<p>Supported tissue types (tissue of origin for gene fusion): EPI (epithelial), HEM (hematopoietic), MES (mesenchymal), AVG (averaged, when tissue of origin is unknown) </p>
+	<p>Supported input types: </p>
+	<p>input_type = "coord" (Default format accepted by Oncofuse) </p>
+	<p>Tab-delimited file with lines containing 5' and 3' breakpoint positions (first nucleotide lost upon fusion) and tissue of origin: </p>
+	<p>5' chrom \t 5' coord \t 3' chrom \t 3' coord \t tissue_type </p>
+	<p>For this format tissue of origin is set individually for each entry in input file and tissue_type argument should be set as "-" </p>
+	<p>input_type = "tophat" </p>
+	<p>Default output file of Tophat-fusion and Tophat2 (usually fusions.out file in results folder). Tophat-fusion-post is also supported with extended input type argument "tophat-post". </p>
+	<p>input_type = "fcatcher" </p>
+	<p>Default output file of FusionCatcher software. Tissue type has to be set using tissue_type argument. </p>
+	<p>input_type = "rnastar" </p>
+	<p>Default output file of RNASTAR software. Data is pre-filtered based on number of spanning N>=1 and total number of supporting reads M>=2 reads. These parameters could be changed with extended input type argument "rnastar-N-M". Tissue type has to be set using tissue_type argument. </p>
+	<p>OUTPUT </p>
+	<p>A tab-delimited table with the following columns </p>
+	<p>SAMPLE_ID	The ID of sample for tophat-post, input file name otherwise </p>
+	<p>FUSION_ID	The original line number in input file </p>
+	<p>TISSUE	As specified by library argument or in 'coord' input file </p>
+	<p>GENOMIC	Chromosomal coordinates for both breakpoints (as in input file) </p>
+	<p>SPANNING_READS	Number of reads that cover fusion junction </p>
+	<p>ENCOMPASSING_READS	Number of reads that map discordantly with one mate mapping to 5'FPG (fusion partner gene) and other mapping to 3'FPG </p>
+
+	<p>5_FPG_GENE_NAME	The HGNC symbol of 5' fusion partner gene </p>
+	<p>5_IN_CDS?	Indicates whether breakpoint is within the CDS of this gene </p>
+	<p>5_SEGMENT_TYPE	Indicates whether breakpoint is located within either exon or intron </p>
+	<p>5_SEGMENT_ID	Indicates number of exon or intron where breakpoint is located </p>
+	<p>5_COORD_IN_SEGMENT	Indicates coordinates for breakpoint within that exon/intron </p>
+	<p>5_FULL_AA	Length of translated 5' FPG in full amino acids </p>
+	<p>5_FRAME	Frame of translated 5' FPG </p>
+	<p>(Same as 7 lines above for the 3' fusion partner gene) </p>
+	<p>FPG_FRAME_DIFFERENCE	The resulting frame of fusion gene, if equals to 0 then the fusion is in-frame </p>
+	<p>P_VAL_CORR	The Bayesian probability of fusion being a passenger (class 0), given as Bonferroni-corrected P-value </p>
+	<p>DRIVER_PROB	The Bayesian probability of fusion being a driver (class 1) </p>
+	<p>EXPRESSION_GAIN	Expression gain of fusion calculated as [(expression of 5' gene)/(expression of 3' gene)]-1 </p>
+	<p>5_DOMAINS_RETAINED	List of protein domains retained in 5' fusion partner gene </p>
+	<p>3_DOMAINS_RETAINED	List of protein domains retained in 3' fusion partner gene </p>
+	<p>5_DOMAINS_BROKEN	List of protein domains that overlap breakpoint in 5' fusion partner gene </p>
+	<p>3_DOMAINS_BROKEN	List of protein domains that overlap breakpoint in 3' fusion partner gene </p>
+	<p>5_PII_RETAINED	List of protein interaction interfaces retained in 5' fusion partner gene </p>
+	<p>3_PII_RETAINED	List of protein interaction interfaces retained in 3' fusion partner gene </p>
+	<p>CTF, G, H, K, P and TF	Corresponding functional family association scores (log-transformed, scaled to the largest score obtained from classifier training set). </p>
+</section>
+<section id="downloads" class="help">
+	<h1 class="centered">Example Chimera Quest input files:</h1>
+	<ul>
+	<li><a href="example/example_coord.txt" class="download_link" download>Example tab-delimited coordinate file</a></li>
+	<li><a href="example/example_fcatcher.txt" class="download_link" download>Example Fusion Catcher file</a></li>
+	<li><a href="example/example_rnastar.txt" class="download_link" download>Example RNA Star file</a></li>
+	<li><a href="example/example_starfusion.txt" class="download_link" download>Example Star Fusion file</a></li>
+	<li><a href="example/example_tophat_post.txt" class="download_link" download>Example Tophat-post file</a></li>
+	<li><a href="example/example_tophat.txt" class="download_link" download>Example Tophat file</a></li>
+	</ul>
+</section>
+</div>
+<nav class="nav">
+	<form class="left_link"><a href="" class="nav_link" id="home_button" type="submit" >Home</a></form>
+	<form class="right_link"><a href="" class="nav_link" id="sample_files" type="submit" >Download sample input files</a></form>
+	<form class="right_link"><a href="" class="nav_link" id="help_button" type="submit" >Help</a></form>
 
 	</nav>
 </body>

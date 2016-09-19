@@ -8,47 +8,37 @@ This script consists of three functions, run_oncofuse() will take the user input
 
 import json
 import os
-from settings import settings
-import mysql.connector
 
-# import subprocess
-# from random import choice
-# from string import ascii_uppercase
+
+import mysql.connector
+import subprocess
+from random import choice
+from string import ascii_uppercase
 
 
 # this function will take the input and run oncofuse
-def run_oncofuse(  ):
+def run_oncofuse( user_input ):
+	tissue_type, input_type, input_file = user_input
+	input_file_name = ''.join(choice(ascii_uppercase) for i in range(15)) + ".txt"
+	input_file_path = os.path.join("./static/tmp", input_file_name )
+	user_file = open(input_file_path, "w")
+	user_file.write(input_file)
+	user_file.close()
 
-	output_file_name = "rna_star_out.txt"
-	# make unique file names for the input and output files
-	# input_file_name = ''.join(choice(ascii_uppercase) for i in range(15)) + ".txt"
-	# output_file_name = ''.join(choice(ascii_uppercase) for i in range(15)) + ".txt"
-	# input_file_path = os.path.join("../tmp", input_file_name)
-	output_file_name = "fusion_catcher_out.txt"
-	output_file_path = os.path.join("../oncofuse/oncofuse_outputs", output_file_name)
 
-	# save the user input file
-	# input_file = open(input_file_path, "w")
-	# in_perm = "chmod 777 {}".format(input_file_path)
-	# in_perm = in_perm.split()
-	# subprocess.call( in_perm )
-	# for line in open(input_file_path).readlines():
-	# 	input_file.write(line)
-	# input_file.close()
+	output_file_name = ''.join(choice(ascii_uppercase) for i in range(15)) + ".txt"
+	output_file_path = os.path.join("./static/oncofuse_outputs", output_file_name)
+
 
 	# Store the command to run oncofuse as a string
-	# command = "java -Xmx1G -jar ../oncofuse/Oncofuse.jar {} {} {} {}".format(input_file_path, input_type, tissue_type, output_file_path )
-	# command = command.split()
+	command = "java -Xmx1G -jar ../oncofuse/Oncofuse.jar {} {} {} {}".format(input_file_path, input_type, tissue_type, output_file_path )
+	command = command.split()
 
 	# Run oncofuse and open/read the results
-	# subprocess.call( command )
-
-	# out_perm = "chmod 777 {}".format(output_file_path)
-	# out_perm = out_perm.split()
-	# subprocess.call( out_perm )
+	subprocess.call( command )
 
 	# store results in a list
-	# results = open(output_file_path)
+
 	results = open(output_file_path).readlines()
 	# for line in open(output_file_path).readlines():
 	# 	results = results + line
@@ -64,7 +54,7 @@ def run_oncofuse(  ):
 def literature_search( id ):
 
 	# connect to the biosql database
-	conn = mysql.connector.connect( user='chimera_quest', password=settings['password'],
+	conn = mysql.connector.connect( user='chimera_quest', password=os.environ['dbpass'],
 										host='localhost', db='chimera_quest' )
 	curs = conn.cursor()
 
@@ -333,8 +323,8 @@ def literature_search( id ):
 	}
 	return(literature_results)
 
-def chimera_quest(  ):
-	results = run_oncofuse(  )
+def chimera_quest( user_input ):
+	results = run_oncofuse( user_input )
 	num = 0
 	fusion_list = []
 	for line in results:
@@ -442,7 +432,7 @@ def chimera_quest(  ):
 			result, data, fusion_coordinates, driver_probability, passenger_probability, expression_gain, spanning_reads, encompassing_reads, frame_difference, five_cds, five_segment_type, five_segment_number, five_segment_position, five_frame, five_gene_length, five_partner, five_interaction_interfaces, five_domains_retained, five_domains_broken, five_pathways_retained, three_cds, three_segment_type, three_segment_number, three_segment_position, three_frame, three_gene_length, three_partner, three_interaction_interfaces, three_domains_retained, three_domains_broken, three_pathways_retained, id, five_summary, three_summary = {}, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None
 
 
-	print(json.dumps(fusion_list, separators=(",",":")))
+	return(json.dumps(fusion_list, separators=(",",":")))
 
 if __name__ == '__main__':
-    chimera_quest(  )
+    chimera_quest( user_input )

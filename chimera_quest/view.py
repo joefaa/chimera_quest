@@ -1,39 +1,49 @@
 import jinja2
 from chimera_quest.model import chimera_quest
 import cgi
-
+import os
+from tempfile import TemporaryFile
+import sys
 def application( environ, start_response ):
-    # This line tells the template loader where to search for template files
-    templateLoader = jinja2.FileSystemLoader( searchpath="./templates" )
 
-    # This creates your environment and loads a specific template
+    templateLoader = jinja2.FileSystemLoader( searchpath="./templates" )
     env = jinja2.Environment( loader=templateLoader )
     template = env.get_template( 'main.html' )
-    template = template.render()
-    start_response("200 OK", [( "Content-Type", "text/html" )])
-    yield(template.encode( "utf8" ))
-    # tissue_type = None
-    # input_type = None
-    #
-    # if environ['REQUEST_METHOD'] == 'POST':
-    #     post_env = environ.copy()
-    #     post_env['QUERY_STRING'] = ''
-    #     post = cgi.FieldStorage(
-    #         fp=environ['wsgi.input'],
-    #         environ=post_env,
-    #         keep_blank_values=True
-    #     )
-    #     # get values
-    #     input_type = post.getvalue( 'input_type' )
-    #     tissue_type = post.getvalue( 'tissue_type')
-    #
-    #
-    # start_response("200 OK", [( "Content-Type", "text/html" )])
-    #
-    # if input_type:
-    #     fusion_list = chimera_quest()
-    #     template = template.render( fusion_list = fusion_list )
-    #     yield(template.encode( "utf8" ))
-    # else:
-    #     template = template.render()
-    #     yield(template.encode( "utf8" ))
+
+    tissue_type = None
+    input_type = None
+    input_file = None
+    user_input = []
+
+    if environ['REQUEST_METHOD'] == 'POST':
+
+        Q_S = cgi.parse_qs(environ['QUERY_STRING'])
+        input_type = Q_S.get('input_type', [''])[0]
+        tissue_type = Q_S.get('tissue_type', [''])[0]
+
+        length = int(environ.get('CONTENT_LENGTH', 0))
+        stream = environ['wsgi.input']
+        body = TemporaryFile(mode='w+b')
+        while length > 0:
+            part = stream.read(min(length, 1024*200)) # 200KB buffer size
+            if not part: break
+            body.write(part)
+            length -= len(part)
+        body.seek(0)
+        environ['wsgi.input'] = body
+        form = cgi.FieldStorage(fp=body, environ=environ, keep_blank_values=True)
+
+        input_file = form['input_file'].file.read().decode("utf-8")
+
+        user_input = [tissue_type, input_type, input_file]
+
+    if input_type:
+
+        fusion_list = chimera_quest( user_input )
+        start_response("200 OK", [( "Content-Type", "text/html" )], ('Content-Length', str(len(fusion_list))))
+        yield(fusion_list.encode( "utf8" ))
+
+    else:
+        template = template.render()
+        start_response("200 OK", [( "Content-Type", "text/html" ),  ('Content-Length', str(len(template)))])
+        yield(template.encode( "utf8" ))
