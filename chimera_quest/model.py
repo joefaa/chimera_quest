@@ -1,4 +1,3 @@
-#!/usr/local/bin/python3
 
 """
 
@@ -9,8 +8,8 @@ This script consists of three functions, run_oncofuse() will take the user input
 import json
 import os
 
+import mysqlc.connector
 
-import mysql.connector
 import subprocess
 from random import choice
 from string import ascii_uppercase
@@ -54,8 +53,8 @@ def run_oncofuse( user_input ):
 def literature_search( id ):
 
 	# connect to the biosql database
-	conn = mysql.connector.connect( user='chimera_quest', password=os.environ['dbpass'],
-										host='localhost', db='chimera_quest' )
+	conn = mysqlc.connector.connect( user=os.environ['user'], password=os.environ['password'],
+										host=os.environ['host'], db=os.environ['db'] )
 	curs = conn.cursor()
 
 	# lists to hold info from databases
