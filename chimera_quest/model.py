@@ -22,10 +22,8 @@ def run_oncofuse( user_input ):
 	user_file.write(input_file)
 	user_file.close()
 
-
 	output_file_name = ''.join(choice(ascii_uppercase) for i in range(15)) + ".txt"
 	output_file_path = os.path.join("./static/oncofuse_outputs", output_file_name)
-
 
 	# Store the command to run oncofuse as a string
 	command = "java -Xmx1G -jar ./oncofuse/Oncofuse.jar {} {} {} {}".format(input_file_path, input_type, tissue_type, output_file_path )
@@ -35,10 +33,8 @@ def run_oncofuse( user_input ):
 	subprocess.call( command )
 
 	# store results in a list
-
 	results = open(output_file_path).readlines()
-	# for line in open(output_file_path).readlines():
-	# 	results = results + line
+
 	# delete any files created
 	deleter = "rm {} {}".format(input_file_path, output_file_path)
 	deleter = deleter.split()
