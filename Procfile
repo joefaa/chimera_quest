@@ -1,1 +1,1 @@
-web: gunicorn chimera_WSGI.py
+web: gunicorn chimera_WSGI:application
