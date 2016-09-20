@@ -7,9 +7,7 @@ This script consists of three functions, run_oncofuse() will take the user input
 
 import json
 import os
-
 import mysql.connector
-
 import subprocess
 from random import choice
 from string import ascii_uppercase
