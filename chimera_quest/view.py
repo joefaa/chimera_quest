@@ -1,10 +1,9 @@
 import jinja2
 from chimera_quest.model import chimera_quest
-import cgi
-import sys
-from tempfile import TemporaryFile
-import os
+import sys, os, cgi
+
 def application( environ, start_response ):
+    sys.stdout = sys.stderr
 
     templateLoader = jinja2.FileSystemLoader( searchpath="./templates" )
     env = jinja2.Environment( loader=templateLoader )
@@ -21,19 +20,9 @@ def application( environ, start_response ):
         input_type = Q_S.get('input_type', [''])[0]
         tissue_type = Q_S.get('tissue_type', [''])[0]
 
-        length = int(environ.get('CONTENT_LENGTH', 0))
         stream = environ['wsgi.input']
-        body = TemporaryFile(mode='w+b')
-        while length > 0:
-            part = stream.read(min(length, 1024*200)) # 200KB buffer size
-            if not part: break
-            body.write(part)
-            length -= len(part)
-        body.seek(0)
-        environ['wsgi.input'] = body
-        form = cgi.FieldStorage(fp=body, environ=environ, keep_blank_values=True)
-
-        input_file = form['input_file'].file.read().decode("utf-8")
+        form = cgi.FieldStorage(fp=stream, environ=environ, keep_blank_values=True)
+        input_file = cgi.escape(form['input_file'].file.read().decode("utf-8"))
 
         user_input = [tissue_type, input_type, input_file]
 
