@@ -2,21 +2,24 @@
 // and check the database.  A JSON object is returned will all the data
 function oncofuse_results(  ) {
 	// hide parts that aren't populated and set up the loader gif
-  $('#fusion_ids').empty();
-	$('#result_count').empty();
-	$("#run_oncofuse").prop("disabled",true);
-	$('#submit_column').hide();
-  $('#loader').show();
-	$('#results').hide();
-	$('#oncofuse_report').hide();
-	$('#literature_report').hide();
-	$('#empty_lit_report').hide();
-	$('#empty_onco_report').hide();
+
   var user_input = $('#user_input').serialize();
 	var fd = new FormData();
   var file_data = $('#input_file')[0].files[0];
+  if( file_data == null ){
+    alert("Please select a file to upload")
+  } else {
+    $('#fusion_ids').empty();
+    $('#result_count').empty();
+    $("#run_oncofuse").prop("disabled",true);
+    $('#submit_column').hide();
+    $('#loader').show();
+    $('#results').hide();
+    $('#oncofuse_report').hide();
+    $('#literature_report').hide();
+    $('#empty_lit_report').hide();
+    $('#empty_onco_report').hide();
   fd.append('input_file', file_data);
-
 	$.ajax({
 		url: "../chimera_quest/view.py?" + user_input,
 		data: fd,
@@ -36,9 +39,15 @@ function oncofuse_results(  ) {
       console.log("results found")
 				$('#result_count').text( results.length );
 			    $.each( results, function( i, value ) {
-					object_string = JSON.stringify(value);
-					var result_button = "<li class='button'><input name='fusion' type='radio' value='" + object_string + "'>" + value.id + "</li>"
-					$( "#fusion_ids" ).append(result_button);
+          if( i == 0 ) {
+  					object_string = JSON.stringify(value);
+            var result_button = "<li class='button'><input name='fusion' type='radio' checked value='" + object_string + "'>" + value.id + "</li>"
+  					$( "#fusion_ids" ).append(result_button);
+          } else {
+  					object_string = JSON.stringify(value);
+            var result_button = "<li class='button'><input name='fusion' type='radio' value='" + object_string + "'>" + value.id + "</li>"
+            $( "#fusion_ids" ).append(result_button);
+          }
 				})
 			}
 			$('#loader').hide();
@@ -55,7 +64,7 @@ function oncofuse_results(  ) {
 			$('#results').hide();
 			$("#run_oncofuse").prop("disabled",false);
 		}
-	})
+	})}
 };
 
 // this function parses the data from oncofuse and populates the report
@@ -95,8 +104,8 @@ function make_oncofuse_report(  ){
 // and populates the report
 function make_literature_report(  ){
 	console.log("lit report")
-	var fusions = $('#fusion').serializeArray();
-	var fusion = $.parseJSON(fusions[0].value)
+	// var fusions = $('#fusion').serializeArray();
+	var fusion = $.parseJSON($('#fusion').serializeArray()[0].value)
 	// this if loop will show a special no-results report
 	if (fusion.total_matches < 1 || fusion.total_matches == null) {
 		$('#empty_lit_header').text( fusion.id );
@@ -139,12 +148,13 @@ $(document).ready( function() {
   $('#results').hide();
 	$('#help').hide();
   $('#downloads').hide();
+
   $('#user_input').submit( function() {
       oncofuse_results();
       return false;
 	});
 	$('#onco_report').click( function() {
-		make_oncofuse_report();
+  make_oncofuse_report();
 		return false;
 	});
 	$('#lit_report').click( function() {

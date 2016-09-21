@@ -1,1 +1,1 @@
-web: gunicorn chimera_WSGI:application
+web: gunicorn -w 4 chimera_WSGI:application
